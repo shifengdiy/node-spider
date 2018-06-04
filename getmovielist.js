@@ -2,7 +2,7 @@ const chr = require('cheerio');
 const ax = require('axios');
 const fs = require('fs');
 
-const maxPage = 400;
+const maxPage = 500;
 let index = 0;
 let pageLimit = 20;
 let start = 0;
@@ -51,7 +51,7 @@ let getMovieList = function getMovieList(){
 		.catch(function(err){
 			console.log('获取电影列表发生错误', err);
 		});
-	}, 10 * 1000)
+	}, 1 * 1000)
 }
 
 getMovieList();
