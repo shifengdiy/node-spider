@@ -5,15 +5,27 @@ const chr = require('cheerio');
 let sumMovieList = [];
 let postImgList = [];
 
+let couter = 0;
+
 let startQueryMovieList = async function(){
 	let arrStream = fs.readFileSync('./static/alllist.js');
 	let sumMovieList = JSON.parse(arrStream);
 
-	for(let i = 0;i < sumMovieList.length;i++){
+	for(let i = 1852;i < sumMovieList.length;i++){
 		let index = i + 1;
 		let getUrl = sumMovieList[i].url;
 
-		let movieDetail = await getMovieDetail(getUrl);
+		if(couter == 500){
+			await timeout();
+			couter = 0;
+		}
+		try {
+			let movieDetail = await getMovieDetail(getUrl);
+			couter++;
+		} catch(err){
+			console.log(`获取第${index}篇发生错误，继续请求`, err);
+			continue;
+		}
 
 		if(movieDetail['电影']){
 			fs.writeFileSync(`./movie/movie-${index}.json`, JSON.stringify(movieDetail));
@@ -106,7 +118,15 @@ let getMovieDetail = function(url){
 			.catch(function(err){
 				reject(err);
 			});
-		}, 1 * 1000);
+		}, 60 * 1000);
+	});
+}
+
+let timeout = function(){
+	return new Promise(function(resolve, reject){
+		setTimeout(function(){
+			resolve(1);
+		}, 10 * 60 * 1000)
 	});
 }
 
