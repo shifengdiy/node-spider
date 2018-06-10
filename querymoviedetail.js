@@ -11,7 +11,7 @@ let startQueryMovieList = async function(){
 	let arrStream = fs.readFileSync('./static/alllist.js');
 	let sumMovieList = JSON.parse(arrStream);
 
-	for(let i = 1980;i < sumMovieList.length;i++){
+	for(let i = 0;i < sumMovieList.length;i++){
 		let index = i + 1;
 		let getUrl = sumMovieList[i].url;
 
