@@ -16,11 +16,11 @@ let startQueryMovieList = async function(){
 		let getUrl = sumMovieList[i].url;
 
 		if(couter == 500){
-			await timeout();
+			let a = await timeout();
 			couter = 0;
 		}
 		try {
-			let movieDetail = await getMovieDetail(getUrl);
+			var movieDetail = await getMovieDetail(getUrl);
 			couter++;
 		} catch(err){
 			console.log(`获取第${index}篇发生错误，继续请求`, err);
@@ -56,6 +56,7 @@ let startQueryMovieList = async function(){
 			        ┃┫┫    ┃┫┫
 			        ┗┻┛    ┗┻┛   
 		`);
+	process.exit();
 }
 
 let getMovieDetail = function(url){
@@ -118,7 +119,7 @@ let getMovieDetail = function(url){
 			.catch(function(err){
 				reject(err);
 			});
-		}, 60 * 1000);
+		}, 6 * 1000);
 	});
 }
 
