@@ -11,7 +11,7 @@ let startQueryMovieList = async function(){
 	let arrStream = fs.readFileSync('./static/alllist.js');
 	let sumMovieList = JSON.parse(arrStream);
 
-	for(let i = 1852;i < sumMovieList.length;i++){
+	for(let i = 0;i < sumMovieList.length;i++){
 		let index = i + 1;
 		let getUrl = sumMovieList[i].url;
 
@@ -71,7 +71,7 @@ let getMovieDetail = function(url){
 					'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7',
 					'Cache-Control': 'no-cache',
 					'Connection': 'keep-alive',
-					'Cookie': 'bid=HP2Tumbyyt4; ll="108296"; gr_user_id=3ea1e71e-f1e7-45e4-9b8b-6eb4470704b9; viewed="1910450_20395127"; _vwo_uuid_v2=AFE8FC78AC7E21B5973854614E889A39|d36904634df12e77e9f0bbf08e25f24e; _pk_ref.100001.4cf6=%5B%22%22%2C%22%22%2C1528094582%2C%22https%3A%2F%2Fwww.baidu.com%2Flink%3Furl%3DvoIDPB5yCLT0I4XqxOSxcwUTG-Et4J7MhoSNkkIJDob2EWJYNBWZjwXbEG1rf7Bp%26wd%3D%26eqid%3Dc1f6b5210003adfa000000065b14df72%22%5D; _pk_ses.100001.4cf6=*; __utma=30149280.2018189101.1526628759.1526628759.1528094582.2; __utmc=30149280; __utmz=30149280.1528094582.2.2.utmcsr=baidu|utmccn=(organic)|utmcmd=organic; __utma=223695111.2126106219.1526628759.1526628759.1528094582.2; __utmb=223695111.0.10.1528094582; __utmc=223695111; __utmz=223695111.1528094582.2.2.utmcsr=baidu|utmccn=(organic)|utmcmd=organic; ap=1; ps=y; ue="shifengdiy@qq.com"; __utmt=1; __utmb=30149280.2.9.1528095729037; dbcl2="107168702:CtZzUgzpxow"; ck=cYPk; push_noty_num=0; push_doumail_num=0; _pk_id.100001.4cf6=3785fa8f210be886.1526628759.2.1528095755.1526628759.',
+					'Cookie': 'bid=HP2Tumbyyt4; ll="108296"; gr_user_id=3ea1e71e-f1e7-45e4-9b8b-6eb4470704b9; viewed="1910450_20395127"; _vwo_uuid_v2=AFE8FC78AC7E21B5973854614E889A39|d36904634df12e77e9f0bbf08e25f24e; __utmc=30149280; __utmz=30149280.1528094582.2.2.utmcsr=baidu|utmccn=(organic)|utmcmd=organic; __utmc=223695111; ap=1; ps=y; ue="shifengdiy@qq.com"; push_noty_num=0; push_doumail_num=0',
 					'Host': 'movie.douban.com',
 					'Pragma': 'no-cache',
 					'Upgrade-Insecure-Requests': 1,
