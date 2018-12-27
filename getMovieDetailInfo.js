@@ -9,11 +9,11 @@ let couter = 0;
 
 let startQueryMovieList = async function(){
 	//移除已有的电影详情目录，建立新的电影文件夹
-	if(fs.existsSync('/movie')){
-		fs.rmdirSync('/movie');
-		fs.mkdirSync('/movie');
+	if(fs.existsSync('./movie')){
+		fs.rmdirSync('./movie');
+		fs.mkdirSync('./movie');
 	} else {
-		fs.mkdirSync('/movie');
+		fs.mkdirSync('./movie');
 	}
 	
 
@@ -32,7 +32,8 @@ let startQueryMovieList = async function(){
 			var movieDetail = await getMovieDetail(getUrl);
 			couter++;
 		} catch (err) {
-			console.log(`获取第${index}篇发生错误，继续请求`, err);
+			console.log(`获取第${index}篇发生错误，停止请求`, err);
+			throw(err);
 			continue;
 		}
 
@@ -64,7 +65,7 @@ let startQueryMovieList = async function(){
 					┃┫┫    ┃┫┫
 					┗┻┛    ┗┻┛   
 		`);
-	process.exit();
+	//process.exit();
 }
 
 let getMovieDetail = function(url){
