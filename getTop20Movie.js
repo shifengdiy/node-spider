@@ -4,7 +4,7 @@ const request = require('request');
 const fs = require('fs');
 const qs = require('querystring');
 
-let reqUrl = 'https://movie.douban.com/j/new_search_subjects?sort=T&range=0,10&tags=&start=0';
+let reqUrl = 'https://movie.douban.com/j/new_search_subjects?sort=S&range=0,10&tags=%E7%94%B5%E5%BD%B1&start=0';
 
 let getTop20Movie = function(){
 	ax({
@@ -24,18 +24,29 @@ let getTop20Movie = function(){
 	.then(function(res){
 		if(res.data.data.length){
 			let list = res.data.data;
-			let allListStream = fs.readFileSync('./static/alllist.js');
-			let allListArr = JSON.parse(allListStream);
-			console.log('旧的数组长度为： ' + allListArr.length);
 
-			//把list添加到数组前面
-			allListArr.unshift(...list);
+			let newListStream = JSON.stringify(list);
+			fs.writeFileSync('./static/Top20Movie.js', newListStream);
+			console.log(`评分最高20部电影获取完毕!
 
-			if(allListArr.length){
-				let newListStream = JSON.stringify(allListArr);
-				fs.writeFileSync('./static/alllist_beta.js', newListStream);
-				console.log('写入完成，新的数组长度为： ' + allListArr.length);
-			}
+					┏┓        ┏┓
+			┏┛┻━━━┛┻┓
+			┃                ┃
+			┃        ━        ┃
+			┃    ┳┛    ┗┳    ┃
+			┃                ┃
+			┃        ┻        ┃
+			┃                ┃
+			┗━┓        ┏━┛
+						┃        ┃
+						┃        ┃
+						┃        ┗━━━┓
+						┃                ┣┓
+						┃                ┏┛
+						┗┓┓┏━┳┓┏┛
+							┃┫┫    ┃┫┫
+							┗┻┛    ┗┻┛  
+			`);
 		}
 	})
 	.catch(function(err){
@@ -43,4 +54,7 @@ let getTop20Movie = function(){
 	});
 }
 
-getTop20Movie(); //开始执行
+//开始执行
+//getTop20Movie();
+
+module.exports = getTop20Movie;

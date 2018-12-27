@@ -8,53 +8,61 @@ let postImgList = [];
 let couter = 0;
 
 let startQueryMovieList = async function(){
-	let arrStream = fs.readFileSync('./static/alllist.js');
-	let sumMovieList = JSON.parse(arrStream);
+	//移除已有的电影详情目录，建立新的电影文件夹
+	if(fs.existsSync('/movie')){
+		fs.rmdirSync('/movie');
+		fs.mkdirSync('/movie');
+	} else {
+		fs.mkdirSync('/movie');
+	}
+	
 
+	let arrStream = fs.readFileSync('./static/allMovieList.js');
+	let sumMovieList = JSON.parse(arrStream); //获得提前查询到的所有电影列表吗，数据中包括电影详细信息的链接地址
 	for(let i = 0;i < sumMovieList.length;i++){
 		let index = i + 1;
 		let getUrl = sumMovieList[i].url;
 
-		if(couter == 500){
+		if (couter == 500) {
+			//每获取发送五百条请求之后，休眠十分钟，防止反爬虫禁止爬取
 			let a = await timeout();
 			couter = 0;
 		}
 		try {
 			var movieDetail = await getMovieDetail(getUrl);
 			couter++;
-		} catch(err){
+		} catch (err) {
 			console.log(`获取第${index}篇发生错误，继续请求`, err);
 			continue;
 		}
 
-		if(movieDetail['电影']){
+		if (movieDetail['电影']) {
 			fs.writeFileSync(`./movie/movie-${index}.json`, JSON.stringify(movieDetail));
 			console.log(`第${index}篇电影写入完毕...`);
 		} else {
 			console.log(`获取过程中发生错误，总共获取${index}条电影数据`, movieDetail);
 		}
-
 	}
 
 	console.log(`全部写入完成，good job!!!
 
-			    ┏┓        ┏┓
-			┏┛┻━━━┛┻┓
-			┃                ┃
-			┃        ━        ┃
-			┃    ┳┛    ┗┳    ┃
-			┃                ┃
-			┃        ┻        ┃
-			┃                ┃
-			┗━┓        ┏━┛
-			      ┃        ┃
-			      ┃        ┃
-			      ┃        ┗━━━┓
-			      ┃                ┣┓
-			      ┃                ┏┛
-			      ┗┓┓┏━┳┓┏┛
-			        ┃┫┫    ┃┫┫
-			        ┗┻┛    ┗┻┛   
+			┏┓        ┏┓
+	┏┛┻━━━┛┻┓
+	┃                ┃
+	┃        ━        ┃
+	┃    ┳┛    ┗┳    ┃
+	┃                ┃
+	┃        ┻        ┃
+	┃                ┃
+	┗━┓        ┏━┛
+				┃        ┃
+				┃        ┃
+				┃        ┗━━━┓
+				┃                ┣┓
+				┃                ┏┛
+				┗┓┓┏━┳┓┏┛
+					┃┫┫    ┃┫┫
+					┗┻┛    ┗┻┛   
 		`);
 	process.exit();
 }
@@ -119,7 +127,7 @@ let getMovieDetail = function(url){
 			.catch(function(err){
 				reject(err);
 			});
-		}, 6 * 1000);
+		}, 60 * 1000);
 	});
 }
 
@@ -131,4 +139,4 @@ let timeout = function(){
 	});
 }
 
-startQueryMovieList();
+module.exports = startQueryMovieList;
