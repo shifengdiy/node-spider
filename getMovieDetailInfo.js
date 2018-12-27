@@ -34,7 +34,6 @@ let startQueryMovieList = async function(){
 		} catch (err) {
 			console.log(`获取第${index}篇发生错误，停止请求`, err);
 			throw(err);
-			continue;
 		}
 
 		if (movieDetail['电影']) {
@@ -42,6 +41,7 @@ let startQueryMovieList = async function(){
 			console.log(`第${index}篇电影写入完毕...`);
 		} else {
 			console.log(`获取过程中发生错误，总共获取${index}条电影数据`, movieDetail);
+			throw(0);
 		}
 	}
 

@@ -60,6 +60,7 @@ let getMovieList = function getMovieList(){
 				})
 				.catch(function (err) {
 					console.log('获取电影列表发生错误', err);
+					throw(err);
 				});
 		}, 1 * 1000)
 	}
